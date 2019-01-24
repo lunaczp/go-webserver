@@ -1,26 +1,30 @@
 package main
 
 import (
-	"flag"
+	"core/config"
 	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 )
 
-var addr = flag.String("addr", ":9090", "http service address")
-
-const tplDiv = "src/view/"
-
-
 func main() {
-	flag.Parse()
+	_, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalln("LoadConfig:", err)
+	}
+
+	var port = config.Config().Global.Port
+	var portStr = ":" + strconv.Itoa(port)
+
 	http.Handle("/favicon.ico", http.HandlerFunc(Ico))
 	http.Handle("/", http.HandlerFunc(Index))
 	http.Handle("/qr", http.HandlerFunc(QR))
 
-	err := http.ListenAndServe(*addr, nil)
+	log.Println("server started.")
+	err = http.ListenAndServe(portStr, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
@@ -28,13 +32,13 @@ func main() {
 
 func Ico(w http.ResponseWriter, req *http.Request) {
 	log.Println("request /favicon.ico")
-	w.Write(nil);
+	w.Write(nil)
 }
 
 func Index(w http.ResponseWriter, req *http.Request) {
 	log.Println("request /")
 
-	var content = getTplContent("index.html");
+	var content = getTplContent("index.html")
 	var indexT = template.Must(template.New("index").Parse(content))
 	indexT.Execute(w, nil)
 }
@@ -42,13 +46,14 @@ func Index(w http.ResponseWriter, req *http.Request) {
 func QR(w http.ResponseWriter, req *http.Request) {
 	log.Println("request /qr")
 
-	var content = getTplContent("qr.html");
+	var content = getTplContent("qr.html")
 	var qrT = template.Must(template.New("qr").Parse(content))
 	qrT.Execute(w, nil)
 }
 
 func getTplContent(filename string) string {
-	filename, _ = filepath.Abs(tplDiv  + filename);
+	var tplDir = config.Config().Global.TplDir
+	filename, _ = filepath.Abs(tplDir + filename)
 	log.Println(filename)
 
 	content, err := ioutil.ReadFile(filename)
@@ -57,4 +62,3 @@ func getTplContent(filename string) string {
 	}
 	return string(content)
 }
-

@@ -1,0 +1,12 @@
+hash: 751998686a2c8a88f7bfed6e9e3cbec0ad6199a9385a69e9fbb5eb45a252bf0c
+updated: 2019-01-24T17:46:54.128295+08:00
+imports:
+- name: gopkg.in/gcfg.v1
+  version: 61b2c08bc8f6068f7c5ca684372f9a6cb1c45ebe
+  subpackages:
+  - scanner
+  - token
+  - types
+- name: gopkg.in/warnings.v0
+  version: ec4a0fea49c7b46c2aeb0b51aac55779c607e52b
+testImports: []

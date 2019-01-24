@@ -12,5 +12,5 @@ func QR(w http.ResponseWriter, req *http.Request) {
 
 	var content = tpl.GetTplContent("qr")
 	var qrT = template.Must(template.New("qr").Parse(content))
-	qrT.Execute(w, nil)
+	qrT.Execute(w, req.FormValue("s"))
 }

@@ -2,11 +2,10 @@ package main
 
 import (
 	"core/config"
+	"core/tpl"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"path/filepath"
 	"strconv"
 )
 
@@ -38,7 +37,7 @@ func Ico(w http.ResponseWriter, req *http.Request) {
 func Index(w http.ResponseWriter, req *http.Request) {
 	log.Println("request /")
 
-	var content = getTplContent("index.html")
+	var content = tpl.GetTplContent("index.html")
 	var indexT = template.Must(template.New("index").Parse(content))
 	indexT.Execute(w, nil)
 }
@@ -46,19 +45,7 @@ func Index(w http.ResponseWriter, req *http.Request) {
 func QR(w http.ResponseWriter, req *http.Request) {
 	log.Println("request /qr")
 
-	var content = getTplContent("qr.html")
+	var content = tpl.GetTplContent("qr.html")
 	var qrT = template.Must(template.New("qr").Parse(content))
 	qrT.Execute(w, nil)
-}
-
-func getTplContent(filename string) string {
-	var tplDir = config.Config().Global.TplDir
-	filename, _ = filepath.Abs(tplDir + filename)
-	log.Println(filename)
-
-	content, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(content)
 }

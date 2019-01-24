@@ -9,6 +9,7 @@ type Configure struct {
 	Global struct {
 		Port   int
 		TplDir string
+		TplExt string
 	}
 }
 

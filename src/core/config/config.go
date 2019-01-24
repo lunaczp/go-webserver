@@ -10,6 +10,7 @@ type Configure struct {
 		Port   int
 		TplDir string
 		TplExt string
+		Env    string
 	}
 }
 

@@ -1,4 +1,4 @@
-package earth
+package earther
 
 type Earther struct {
 	Name string
@@ -9,9 +9,7 @@ func New() *Earther {
 	return earther
 }
 
-func (e *Earther) setName(name string) bool {
+func (e *Earther) SetName(name string) bool {
 	e.Name = name
 	return true
 }
-
-

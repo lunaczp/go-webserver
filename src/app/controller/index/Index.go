@@ -1,6 +1,7 @@
 package index
 
 import (
+	"app/model/earther"
 	"core/tpl"
 	"html/template"
 	"log"
@@ -12,7 +13,10 @@ func Index(w http.ResponseWriter, req *http.Request) {
 
 	var content = tpl.GetTplContent("index")
 	var indexT = template.Must(template.New("index").Parse(content))
-	indexT.Execute(w, nil)
+
+	var one = earther.New()
+	one.SetName("Eason")
+	indexT.Execute(w, one)
 }
 
 func Ico(w http.ResponseWriter, req *http.Request) {

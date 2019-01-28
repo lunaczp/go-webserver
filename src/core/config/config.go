@@ -12,6 +12,12 @@ type Configure struct {
 		TplExt string
 		Env    string
 	}
+	DB struct {
+		Url string
+		Name string
+		User string
+		Pass string
+	}
 }
 
 var conf *Configure

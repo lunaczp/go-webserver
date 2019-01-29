@@ -13,7 +13,7 @@ type Configure struct {
 		Env    string
 	}
 	DB struct {
-		Url string
+		Url  string
 		Name string
 		User string
 		Pass string

@@ -3,6 +3,7 @@ package main
 import (
 	"app/controller/index"
 	"app/controller/qr"
+	"app/controller/user"
 	"core/config"
 	"log"
 	"net/http"
@@ -34,4 +35,5 @@ func setupRoute() {
 	http.Handle("/favicon.ico", http.HandlerFunc(index.Ico))
 	http.Handle("/", http.HandlerFunc(index.Index))
 	http.Handle("/qr", http.HandlerFunc(qr.QR))
+	http.Handle("/user", http.HandlerFunc(user.User))
 }

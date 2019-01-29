@@ -9,11 +9,11 @@ import (
 )
 
 type User struct {
-	Id int
+	Id   int
 	Name string
 }
 
-func getUserById(id int) *User {
+func GetUserById(id int) (*User, error) {
 	var dsn = fmt.Sprintf(
 		"%s:%s@tcp(%s)/%s?charset=utf8",
 		config.Config().DB.User,
@@ -32,7 +32,12 @@ func getUserById(id int) *User {
 		log.Fatal(err)
 	}
 
-	//todo fetch
-	return &User{}
+	u := User{}
+	err = db.QueryRow("select * from user where id = ?", id).Scan(&u.Id, &u.Name)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println(u)
 
+	return &u, nil
 }
